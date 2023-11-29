@@ -56,7 +56,7 @@
 		    <artifactId>selenium-java</artifactId>
 		    <version>4.15.0</version>
 		</dependency>
-		<!-- https:*** GRADLE ***//mvnrepository.com/artifact/org.testng/testng -->
+		<!-- https:*** TestNG ***//mvnrepository.com/artifact/org.testng/testng -->
 		<dependency>
 		    <groupId>org.testng</groupId>
 		    <artifactId>testng</artifactId>
@@ -75,11 +75,35 @@
 		    <artifactId>xml-apis</artifactId>
 		    <version>1.4.01</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<!-- *** JSON *** https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20231013</version>
+		</dependency>
+		<!-- *** ExtentReport ***  https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+		<dependency>
+		    <groupId>com.aventstack</groupId>
+		    <artifactId>extentreports</artifactId>
+		    <version>5.1.1</version>
+		</dependency>
+		<!-- *** JACKSON ***  https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.16.0</version>
+		</dependency>
+		<!--*** GSON ***   https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.10.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
+		<dependency>
+		    <groupId>com.relevantcodes</groupId>
+		    <artifactId>extentreports</artifactId>
+		    <version>2.41.2</version>
 		</dependency>
 
 	</dependencies>
