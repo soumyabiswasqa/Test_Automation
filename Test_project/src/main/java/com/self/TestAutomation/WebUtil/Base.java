@@ -1,21 +1,24 @@
 package com.self.TestAutomation.WebUtil;
 
 import java.io.*;
+import java.time.Duration;
 import java.util.*;
-import javax.xml.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.apache.*;
 import org.apache.commons.io.FileUtils;
-import org.openqa.*;
-import org.w3c.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.w3c.dom.Document;
-import org.xml.*;
 import org.xml.sax.SAXException;
-import com.aventstack.*;
-import com.fasterxml.*;
-import com.google.gson.*;
 import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -27,12 +30,17 @@ import com.aventstack.extentreports.reporter.*;
 
 public class Base extends WebDriverUtil
 {
+	
+	public String executionType;
+	public String browserType;
 	public String extentFilelocation;
 	public String extentFileName;
-	public ExtentReports extent;
+	public static ExtentReports extent;
 	public ExtentTest logger;
 	public Document xmlDoc;
 	public String logFile;
+	public String testStepStatus;
+	public String activeTestStepName;
 	public ExtentSparkReporter htmlReporter;
 	String extentFileLocation;
 	File srcFile = new File ("TestData\\TestData.XML");
@@ -44,7 +52,7 @@ public class Base extends WebDriverUtil
 		try
 		{
 			Properties properties = new Properties();
-			FileInputStream inputproperties = new FileInputStream(System.getProperty("user.dir") + "input.properties");
+			FileInputStream inputproperties = new FileInputStream(System.getProperty("user.dir") + "\\"+"input.properties");
 			properties.load(inputproperties);
 			text = properties.getProperty(input);
 		}catch(Exception e)
@@ -70,11 +78,17 @@ public class Base extends WebDriverUtil
 	
 	public void loadXML(String filePath) throws ParserConfigurationException, SAXException, IOException
 	{
-		File file = new File(filePath);
-		DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dB = dBF.newDocumentBuilder();
-		xmlDoc = dB.parse(file);
-		xmlDoc.getDocumentElement().normalize();
+		try 
+		{
+			File file = new File(filePath);
+			DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dB = dBF.newDocumentBuilder();
+			xmlDoc = dB.parse(file);
+			xmlDoc.getDocumentElement().normalize();
+		} catch (ParserConfigurationException e) 
+		{
+			System.err.println("Unable to Load XML file. ERROR --> "+e);
+		} 
 	}
 	
 	public void StartextentReport(String msName)
@@ -101,8 +115,17 @@ public class Base extends WebDriverUtil
 			System.err.println("Unable to create Extent Report. ERROR --> "+e);
 		}
 	}
-	
-	public void EndextentReport(String msName)
+	public void EndDriver()
+	{
+		try
+		{
+			driver.quit();		
+		}catch(Exception e)
+		{
+			System.err.println("Unable to end Extent Report. ERROR --> "+e);
+		}
+	}
+	public void EndextentReport()
 	{
 		try
 		{
@@ -149,14 +172,111 @@ public class Base extends WebDriverUtil
 		}
 	}
 	
-	public void testReadyness(String testName)
+	public void testReadyness() throws Throwable
 	{
 		try
 		{
 			FileUtils.copyFile(srcFile, destFile);
+			Common_Utils objCom = new Common_Utils();
+			objCom.userNavigateToApplication();
+			
 		}catch(Exception e)
 		{
 			System.err.println("Unable to report Status as FAIL. ERROR --> "+e);
+		}
+	}
+	
+	public void initializeDriver() throws Throwable
+	{
+		try
+		{
+			String executionType = readProps("ExecutionType");
+			if(executionType.equalsIgnoreCase(executionType))
+			{
+				driver();
+			}
+		}catch(Exception e)
+		{
+			System.err.println("Unable to Initialize Driver. ERROR --> "+e);
+		}
+	}
+	public void userNavigateToApplication() throws Throwable
+	{
+		initializeDriver();
+		try
+		{
+			String URL = readProps("URL");
+			driver.get(URL);
+			Thread.sleep(5000);
+			
+			
+		}catch(Exception e)
+		{
+			System.err.println("Unable to Initialize Driver. ERROR --> "+e);
+		}
+	}
+	
+	
+	
+	public void elementOperations(WebElement element, String operation, String value) throws Throwable
+	{
+		try
+		{
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			WebElement ele = wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(element)));
+			if (operation.equalsIgnoreCase("keyaction")) 
+			{
+				if (value.equalsIgnoreCase("Enter"))
+					ele.sendKeys(Keys.ENTER);
+				if (value.equalsIgnoreCase("Tab"))
+					ele.sendKeys(Keys.TAB);
+				if (value.equalsIgnoreCase("Down"))
+					ele.sendKeys(Keys.ARROW_DOWN);
+				if (value.equalsIgnoreCase("Up"))
+					ele.sendKeys(Keys.ARROW_UP);
+				if (value.equalsIgnoreCase("Left"))
+					ele.sendKeys(Keys.ARROW_LEFT);
+				if (value.equalsIgnoreCase("Right"))
+					ele.sendKeys(Keys.ARROW_RIGHT);
+			} 
+			else if (operation.equalsIgnoreCase("click"))
+				ele.click();
+			else if (operation.equalsIgnoreCase("clear"))
+				ele.clear();
+			else if (operation.equalsIgnoreCase("sendkeys"))
+				ele.sendKeys(value);			
+		}
+		catch(StaleElementReferenceException e)
+		{
+			System.err.println("Unable to perform Element Operations. ERROR --> "+e);
+		}
+	}
+	
+	public void elementOperations(WebElement element, String operation, String selectType, String value) throws Throwable
+	{
+		try
+		{
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			WebElement ele = wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(element)));		
+			if (operation.equalsIgnoreCase("select")) 
+			{
+				Select objSet = new Select(element);
+				if(selectType == "selectByValue")
+					objSet.selectByValue(value);
+				else if(selectType == "selectByVisibleText")
+					objSet.selectByVisibleText(value);;
+					
+			} 
+			else if (operation.equalsIgnoreCase("click"))
+				ele.click();
+			else if (operation.equalsIgnoreCase("clear"))
+				ele.clear();
+			else if (operation.equalsIgnoreCase("sendkeys"))
+				ele.sendKeys(value);			
+		}
+		catch(StaleElementReferenceException e)
+		{
+			System.err.println("Unable to perform Element Operations. ERROR --> "+e);
 		}
 	}
 }

@@ -85,22 +85,6 @@ public class Common_Utils extends Base
 		{
 			System.err.println("Unable to Write in the File. ERROR --> "+e);
 		}
-	}
-	
-	public void initializeDriver() throws Throwable
-	{
-		try
-		{
-			String executionType = readProps("ExecutionType");
-			if(executionType.equalsIgnoreCase(executionType))
-			{
-				driver();
-			}
-		}catch(Exception e)
-		{
-			System.err.println("Unable to Initialize Driver. ERROR --> "+e);
-		}
-	}
-	
+	}	
 	
 }

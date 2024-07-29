@@ -1,0 +1,30 @@
+<TestCases>
+	<TestCase>
+		<TestCaseName>Validate user is able to Login to the application and filter and add items</TestCaseName>
+			
+				<TestStep id = "1">
+					<StepName>Login to the application</StepName>
+					<Package>com.self.TestAutomation.StepDefination</Package>
+					<ClassName>StepDefination</ClassName>
+					<Method>userLoginToApplication</Method>
+				</TestStep>
+				<TestStep id = "2">
+					<StepName>Filter Shopping Page</StepName>
+					<Package>com.self.TestAutomation.StepDefination</Package>
+					<ClassName>StepDefination</ClassName>
+					<Method>applicationFilter</Method>
+				</TestStep>
+				<TestStep id = "3">
+					<StepName>Add Items</StepName>
+					<Package>com.self.TestAutomation.StepDefination</Package>
+					<ClassName>StepDefination</ClassName>
+					<Method>addItems</Method>
+				</TestStep>
+				<TestStep id = "4">
+					<StepName>Navigate to Shopping Cart</StepName>
+					<Package>com.self.TestAutomation.StepDefination</Package>
+					<ClassName>StepDefination</ClassName>
+					<Method>shoppingCart</Method>
+				</TestStep>			
+	</TestCase>
+</TestCases>
