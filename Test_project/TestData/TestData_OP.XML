@@ -1,4 +1,8 @@
 <TestData>
-
-
+	<TestCase name = "Validate user is able to Login to the application and filter and add items">
+		<Field name ="filterLowtoHigh">lohi</Field>
+		<Field name ="filterHightoLow">hilo</Field>
+		<Field name ="filterAtoZ">az</Field>
+		<Field name ="filterZtoA">za</Field>
+	</TestCase>
 </TestData>
