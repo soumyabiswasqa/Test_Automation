@@ -4,6 +4,15 @@ import org.testng.annotations.*;
 import com.self.TestAutomation.WebUtil.Base;
 import com.self.TestAutomation.WebUtil.XMLUtil;
 
+/* #####################################################################################
+ * 
+ * This the TestRunner class. This is the starting point of the automated test run.
+ * 
+ * Created By : SOUMYADEEP BISWAS
+ * 
+ * #####################################################################################
+ * */
+
 public class TestRunner_Application_Test extends Base
 {
 	public String testCaseXML;

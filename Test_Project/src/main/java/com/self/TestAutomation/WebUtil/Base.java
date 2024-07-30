@@ -45,6 +45,8 @@ public class Base extends WebDriverUtil
 	
 	public String readProps(String input)
 	{
+		/* This method reads from input.properties */
+		
 		String text = null;
 		try
 		{
@@ -61,6 +63,7 @@ public class Base extends WebDriverUtil
 	
 	public void writeToLogFile(String fileContent)
 	{
+		/* This method writes to the log file */
 		try
 		{
 			BufferedWriter out = new BufferedWriter(new FileWriter(logFile, true));
@@ -75,6 +78,7 @@ public class Base extends WebDriverUtil
 	
 	public void loadXML(String filePath) throws ParserConfigurationException, SAXException, IOException
 	{
+		/* This method loads an XML file */
 		try 
 		{
 			File file = new File(filePath);
@@ -90,6 +94,7 @@ public class Base extends WebDriverUtil
 	
 	public void startExtentReport(String msName)
 	{
+		/* This method starts the Extent Report */
 		try
 		{
 			String fileName = "target\\extents\\ExtentReport_" + msName +".html";
@@ -115,6 +120,7 @@ public class Base extends WebDriverUtil
 	
 	public void endDriver()
 	{
+		/* This method Quits the driver being used */
 		try
 		{
 			driver.quit();		
@@ -126,6 +132,7 @@ public class Base extends WebDriverUtil
 	
 	public void endExtentReport()
 	{
+		/* This method ends the extent report */
 		try
 		{
 			extent.flush();			
@@ -137,6 +144,7 @@ public class Base extends WebDriverUtil
 	
 	public void CopyReportToResultFolder() throws IOException
 	{
+		/* This method copy the report to result folder */
 		try
 		{
 			Common_Utils objCom = new Common_Utils();
@@ -151,6 +159,7 @@ public class Base extends WebDriverUtil
 	
 	public void ReportStepStatusPass(String stepName) 
 	{
+		/* This method logs the Pass status to report */
 		try
 		{
 			logger.log(Status.PASS, stepName);	
@@ -162,6 +171,7 @@ public class Base extends WebDriverUtil
 	
 	public void ReportStepStatusFail(String stepName) 
 	{
+		/* This method logs the Fail status to report */
 		try
 		{
 			logger.log(Status.FAIL, MarkupHelper.createLabel(stepName, ExtentColor.RED));	
@@ -173,6 +183,7 @@ public class Base extends WebDriverUtil
 	
 	public void testReadyness() throws Throwable
 	{
+		/* This method launches the application */
 		try
 		{
 			FileUtils.copyFile(srcFile, destFile);
@@ -187,6 +198,7 @@ public class Base extends WebDriverUtil
 	
 	public void initializeDriver() throws Throwable
 	{
+		/* This method initializes the driver */
 		try
 		{
 			String executionType = readProps("ExecutionType");
@@ -202,6 +214,7 @@ public class Base extends WebDriverUtil
 	
 	public void userNavigateToApplication() throws Throwable
 	{
+		/* This method initializes the driver and launches the application */
 		initializeDriver();
 		try
 		{
@@ -218,6 +231,7 @@ public class Base extends WebDriverUtil
 	
 	public void elementOperations(WebElement element, String operation, String value) throws Throwable
 	{
+		/* This method controls the basic elementOperations for all Selenium WebElement */
 		try
 		{
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -252,6 +266,7 @@ public class Base extends WebDriverUtil
 	
 	public void elementOperations(WebElement element, String operation, String selectType, String value) throws Throwable
 	{
+		/* This method controls the basic elementOperations for all Selenium WebElement - specifically for Select*/
 		try
 		{
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -262,8 +277,7 @@ public class Base extends WebDriverUtil
 				if(selectType == "selectByValue")
 					objSet.selectByValue(value);
 				else if(selectType == "selectByVisibleText")
-					objSet.selectByVisibleText(value);;
-					
+					objSet.selectByVisibleText(value);					
 			} 
 			else if (operation.equalsIgnoreCase("click"))
 				ele.click();
@@ -278,8 +292,10 @@ public class Base extends WebDriverUtil
 		}
 	}
 	
-	public Map<Object,Object> getTestData(String testDataFilePath, String testCaseName) throws ParserConfigurationException, SAXException, IOException
+	public Map<Object,Object> getTestData(String testDataFilePath, String testCaseName) 
+			throws ParserConfigurationException, SAXException, IOException
 	{
+		/* This method fetch TestData from XML file */
 		Map<Object,Object> returnMap = new HashMap<Object,Object>();
 		try
 		{
