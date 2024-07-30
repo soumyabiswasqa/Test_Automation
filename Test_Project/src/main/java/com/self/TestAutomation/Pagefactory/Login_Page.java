@@ -5,6 +5,17 @@ import org.openqa.selenium.support.FindBy;
 
 import com.self.TestAutomation.WebUtil.Base;
 
+/* 
+ * #####################################################################################
+ * 
+ * This the PageFactory class. In this class all the WebElements are defined are defined.
+ * 
+ * Created By : SOUMYADEEP BISWAS
+ * 
+ * #####################################################################################
+ * 
+ * */
+
 public class Login_Page extends Base
 {
 	@FindBy(xpath="//input[contains(@id,'user-name')]")

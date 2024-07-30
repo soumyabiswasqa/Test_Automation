@@ -8,6 +8,17 @@ import org.openqa.selenium.support.PageFactory;
 import com.self.TestAutomation.Pagefactory.Login_Page;
 import com.self.TestAutomation.WebUtil.Base;
 
+/* 
+ * #####################################################################################
+ * 
+ * This the StepDefination class. In this class all the test steps are defined.
+ * 
+ * Created By : SOUMYADEEP BISWAS
+ * 
+ * #####################################################################################
+ * 
+ * */
+
 public class StepDefination extends Base
 {
 	public String userLoginToApplication() throws Throwable
